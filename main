@@ -1,0 +1,29 @@
+package com.lx;
+
+import java.util.Scanner;
+
+public class Project1 {
+
+	public static void main(String[] args) throws Exception {
+		Scanner scan = new Scanner(System.in);
+		boolean a = true;
+		while (a) {
+			System.out.println("어떤 컬럼으로 입력하시겠습니까? (1.직원이름 2.입사년도 3.부서번호 4.직무 5.도시이름 6.부사원 성 7.나라이름	0.종료");
+			int num = scan.nextInt();
+			if (num == 0) {
+				a = false;
+			}
+			else if (num >7) {
+				System.out.println("1~7 숫자로 다시 입력");
+			}
+			else {
+				if (num == 1) {
+					System.out.print("직원 이름을 입력하세요");
+					String name = scan.nextLine();
+				}
+			
+		}
+		
+	}
+	}
+}
