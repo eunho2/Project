@@ -30,16 +30,19 @@ public class Project1 {
 					System.out.println("입사년도를 입력하세요");
 					int year = scan.nextInt();
 					System.out.println("입사년도 : "+ year);
+					empList = getEmpInfo.getEmpInfoByHireYear(year);
 				}
 				if (num == 3) {
 					System.out.println("부서번호를 입력하세요");
-					int department_id = scan.nextInt();
-					System.out.println("부서번호 : "+ department_id);
+					int dep_id = scan.nextInt();
+					System.out.println("부서번호 : "+ dep_id);
+					empList = getEmpInfo.getEmpInfoByDepId(dep_id);
 				}
 				if (num == 4) {
 					System.out.println("직무를 입력하세요");
 					String job_id = scan.nextLine();
 					System.out.println("직무 : "+ job_id);
+					empList = getEmpInfo.getEmpInfoByJobId(job_id);
 				}
 			}
 		
@@ -49,5 +52,7 @@ public class Project1 {
 		}
 	}
 }
+
+
 
 
