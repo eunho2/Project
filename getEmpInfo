@@ -1,5 +1,4 @@
 // 함수 모아두는 클래스
-
 package com.lx;
 
 import java.sql.Connection;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class getEmpInfo {
+	//1번
 	public static List<Emp> getEmpInfoByName(String last_name) throws Exception {
 		List<Emp> result = new ArrayList<Emp>();
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/newhr", "root", "rootroot");
@@ -20,8 +20,17 @@ public class getEmpInfo {
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			Emp emp = new Emp();
-			emp.salary= rs.getInt("salary");
+			emp.employee_id = rs.getInt("employee_id");
+			emp.first_name = rs.getString("first_name");
+			emp.last_name = rs.getString("last_name");
+			emp.email = rs.getString("email");
+			emp.phone_number = rs.getString("phone_number");
 			emp.hire_date = rs.getString("hire_date");
+			emp.job_id = rs.getString("job_id");
+			emp.salary= rs.getInt("salary");
+			emp.commission_pct = rs.getDouble("commission_pct");
+			emp.manager_id = rs.getInt("manager_id");
+			emp.department_id = rs.getInt("department_id");
 			result.add(emp);
 		}
 		return result;
