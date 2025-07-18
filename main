@@ -77,8 +77,10 @@ public class Project2 {
 			}
 		
 		}
-		for (Emp emp : empList) {
+		if (empList != null) {
+			for (Emp emp : empList) {
 			System.out.println(emp);
+			}
 		}
 	}
 }
