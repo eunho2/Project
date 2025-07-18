@@ -1,0 +1,30 @@
+// 함수 모아두는 클래스
+
+package com.lx;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+public class getEmpInfo {
+	public static List<Emp> getEmpInfoByName(String last_name) throws Exception {
+		List<Emp> result = new ArrayList<Emp>();
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/newhr", "root", "rootroot");
+		String sql = "select * from employees where last_name = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		//stmt.setString(1, first_name);
+		stmt.setString(1, last_name);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			Emp emp = new Emp();
+			emp.salary= rs.getInt("salary");
+			emp.hire_date = rs.getString("hire_date");
+			result.add(emp);
+		}
+		return result;
+		
+	}
+}
