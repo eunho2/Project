@@ -1,0 +1,54 @@
+# 직원 이름으로 검색 (King)
+select *
+from employees
+where concat(last_name,first_name) = 'FrippAdam'
+;
+
+# 입사년도로 검색 
+#(2017)
+select *
+from employees
+where year(hire_date) = 2017 
+;
+
+#(2년차 이상)
+select *
+from employees
+where year(curdate()) - year(hire_date) >= 2
+;
+
+# 부서번호로 검색(50)
+select *
+from employees
+where department_id = 50
+;
+
+# 직무로 검색(ST_MAN)
+select *
+from employees
+where job_id = "ST_MAN" 
+;
+
+# 도시이름으로 검색(Roma)
+select *
+from employees
+where (department_id in (select department_id
+							from departments
+							where location_id in (select location_id
+												from locations
+												where city = 'Roma')))
+;
+select city
+from locations     
+;
+
+# 통계자료 출력 - 경우의 수 구분
+
+# 부서장 성으로 부서원 검색(king)
+select *
+from employees
+where (department_id in (select department_id
+							from departments
+                            where manager_id in (select employee_id
+													from employees
+                                                    where last_name = 'king')))
