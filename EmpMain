@@ -1,0 +1,32 @@
+package com.lx;
+
+import java.util.Scanner;
+
+public class EmpMain {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scan = new Scanner(System.in);
+        boolean run = true;
+
+        while (run) {
+            System.out.println("어떤 컬럼으로 입력하시겠습니까? (1.직원이름 2.입사년도 3.부서번호 4.직무 5.도시이름 6.부서장 성 7.나라이름 8.통계자료   0.종료)");
+
+            if (!scan.hasNextInt()) {
+                System.out.println("숫자를 입력해주세요!");
+                scan.nextLine();
+                continue;
+            }
+
+            int num = scan.nextInt();
+            scan.nextLine();
+
+            if (num == 0) {
+                run = false;
+            } else {
+                EmpDAO.runOption(num, scan);
+            }
+        }
+
+        scan.close();
+    }
+}
