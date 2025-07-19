@@ -129,16 +129,16 @@ public class EmpDAO {
 		return add(sql);
 	}
 	//8번
-	public static void getStatics(int static_num) throws Exception {
+	public static void getStatics(int statics_num) throws Exception {
 	    Class.forName("com.mysql.cj.jdbc.Driver");
 	    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/newhr", "root", "rootroot");
 
 	    String sql = null;
-	    if (static_num == 1) {
+	    if (statics_num == 1) {
 	        sql = "select department_id, count(*) as total_employees, avg(salary) as avg_salary, max(salary) as max_salary, min(salary) as min_salary from employees group by department_id";
-	    } else if (static_num == 2) {
+	    } else if (statics_num == 2) {
 	        sql = "select round(datediff(curdate(), hire_date) / 365.5, 0) as year_of_service, count(*) as total_employees, avg(salary) as avg_salary, max(salary) as max_salary, min(salary) as min_salary from employees group by year_of_service order by year_of_service";
-	    } else if (static_num == 3) {
+	    } else if (statics_num == 3) {
 	        sql = "select c.country_id, count(*) as total_employees, avg(e.salary) as avg_salary, max(e.salary) as max_salary, min(e.salary) as min_salary from employees e join departments d on e.department_id = d.department_id join locations l on d.location_id = l.location_id join countries c on l.country_id = c.country_id group by c.country_id";
 	    }
 
@@ -146,21 +146,21 @@ public class EmpDAO {
 	    ResultSet rs = stmt.executeQuery();
 	    
 	    while (rs.next()) {
-	        if (static_num == 1) {
+	        if (statics_num == 1) {
 	            int departmentId = rs.getInt("department_id");
 	            int totalEmployees = rs.getInt("total_employees");
 	            int avgSalary = rs.getInt("avg_salary");
 	            int maxSalary = rs.getInt("max_salary");
 	            int minSalary = rs.getInt("min_salary");
 	            System.out.println("부서번호: " + departmentId + ", 사원수: " + totalEmployees + ", 평균급여: " + avgSalary + ", 최고급여: " + maxSalary + ", 최저급여: " + minSalary);
-	        } else if (static_num == 2) {
+	        } else if (statics_num == 2) {
 	            int yearOfService = rs.getInt("year_of_service");
 	            int totalEmployees = rs.getInt("total_employees");
 	            int avgSalary = rs.getInt("avg_salary");
 	            int maxSalary = rs.getInt("max_salary");
 	            int minSalary = rs.getInt("min_salary");
 	            System.out.println("근속연차: " + yearOfService + "년, 사원수: " + totalEmployees + ", 평균급여: " + avgSalary + ", 최고급여: " + maxSalary + ", 최저급여: " + minSalary);
-	        } else if (static_num == 3) {
+	        } else if (statics_num == 3) {
 	            String countryId = rs.getString("country_id");
 	            int totalEmployees = rs.getInt("total_employees");
 	            int avgSalary = rs.getInt("avg_salary");
