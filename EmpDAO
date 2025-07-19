@@ -9,72 +9,78 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmpDAO {
+	public static Scanner scan = new Scanner(System.in);
 	public static String sql = null;
 	public PreparedStatement stmt = null; 
 	public static String a= null;
 	
-	public static void runOption(int num, Scanner scan) throws Exception {
+	public static void runChoose(int num){
 	    List<Emp> empList = null;
 
-	    switch (num) {
-	        case 1:
-	            System.out.println("직원 이름을 입력하세요");
-	            String name = scan.nextLine();
-	            empList = getEmpInfoByName(name);
-	            break;
-	        case 2:
-	            System.out.println("입사년도를 입력하세요");
-	            int year = scan.nextInt();
-	            empList = getEmpInfoByHireYear(year);
-	            break;
-	        case 3:
-	            System.out.println("부서번호를 입력하세요");
-	            int dep_id = scan.nextInt();
-	            empList = getEmpInfoByDepId(dep_id);
-	            break;
-	        case 4:
-	            System.out.println("직무를 입력하세요");
-	            String job_id = scan.nextLine();
-	            empList = getEmpInfoByJobId(job_id);
-	            break;
-	        case 5:
-	            System.out.println("도시이름을 입력하세요");
-	            String city = scan.nextLine();
-	            empList = getEmpInfoByCity(city);
-	            break;
-	        case 6:
-	            System.out.println("부서장 성을 입력하세요");
-	            String dep_last = scan.nextLine();
-	            empList = getEmpInfoByDepLastName(dep_last);
-	            break;
-	        case 7:
-	            System.out.println("나라이름 입력하세요");
-	            String country = scan.nextLine();
-	            empList = getEmpInfoByCountry(country);
-	            break;
-	        case 8:
-	            System.out.println("더 세부적으로 통계입니다 1.부서별 2.입사년도 3.나라id 0.기본화면으로");
-	            int static_num = scan.nextInt();
-	            if (static_num == 0) return;
-	            if (static_num >= 1 && static_num <= 3) {
-	                getStatics(static_num);
-	            } else {
-	                System.out.println("1~3 숫자로 다시 입력하세요!");
-	            }
-	            return; // empList 출력 안함
-	           default:
-	            System.out.println("1~8 숫자로 다시 입력하세요!");
-	            return;
-	    }
+	     try {
+	            if (num == 1) {
+	                System.out.println("직원 이름을 입력하세요");
+	                String name = scan.nextLine();
+	                empList = getEmpInfoByName(name);
 
-	    if (empList == null || empList.isEmpty()) {
-	        System.out.println("해당 데이터가 없습니다!");
-	    } else {
-	        for (Emp emp : empList) {
-	            System.out.println(emp);
-	        }
+	            } else if (num == 2) {
+	                System.out.println("입사년도를 입력하세요");
+	                int year = scan.nextInt();
+	                empList = getEmpInfoByHireYear(year);
+
+	            } else if (num == 3) {
+	                System.out.println("부서번호를 입력하세요");
+	                int dep_id = scan.nextInt();
+	                empList = getEmpInfoByDepId(dep_id);
+
+	            } else if (num == 4) {
+	                System.out.println("직무를 입력하세요");
+	                String job_id = scan.nextLine();
+	                empList = getEmpInfoByJobId(job_id);
+
+	            } else if (num == 5) {
+	                System.out.println("도시이름을 입력하세요");
+	                String city = scan.nextLine();
+	                empList = getEmpInfoByCity(city);
+
+	            } else if (num == 6) {
+	                System.out.println("부서장 성을 입력하세요");
+	                String dep_last = scan.nextLine();
+	                empList = getEmpInfoByDepLastName(dep_last);
+
+	            } else if (num == 7) {
+	                System.out.println("나라이름 입력하세요");
+	                String country = scan.nextLine();
+	                empList = getEmpInfoByCountry(country);
+
+	            } else if (num == 8) {
+	                System.out.println("더 세부적으로 통계입니다 1.부서별 2.입사년도 3.나라id 0.기본화면으로");
+	                int statics_num = scan.nextInt();
+	                if (statics_num == 0) {
+	                	return;
+	                }
+	                if (statics_num >= 1 && statics_num <= 3) {
+	                    getStatics(statics_num);
+	                } else {
+	                    System.out.println("1~3 숫자로 다시 입력하세요!");
+	                }
+	                return;
+	            }
+
+	            // 데이터 출력
+	            if (empList.isEmpty()) {
+	                System.out.println("해당 데이터가 없습니다!");
+	            } else {
+	                for (Emp emp : empList) {
+	                    System.out.println(emp);
+	                }
+	            }
+
+	        } catch (Exception e) {
+	            System.out.println("숫자를 올바르게 입력하세요!");
 	    }
 	}
+
 	
 	//1번 
 	public static List<Emp> getEmpInfoByName(String name) throws Exception {
@@ -127,8 +133,7 @@ public class EmpDAO {
 	    Class.forName("com.mysql.cj.jdbc.Driver");
 	    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/newhr", "root", "rootroot");
 
-	    String sql = "";
-
+	    String sql = null;
 	    if (static_num == 1) {
 	        sql = "select department_id, count(*) as total_employees, avg(salary) as avg_salary, max(salary) as max_salary, min(salary) as min_salary from employees group by department_id";
 	    } else if (static_num == 2) {
@@ -139,7 +144,7 @@ public class EmpDAO {
 
 	    PreparedStatement stmt = conn.prepareStatement(sql);
 	    ResultSet rs = stmt.executeQuery();
-
+	    
 	    while (rs.next()) {
 	        if (static_num == 1) {
 	            int departmentId = rs.getInt("department_id");
