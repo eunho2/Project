@@ -4,29 +4,28 @@ import java.util.Scanner;
 
 public class EmpMain {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean run = true;
 
         while (run) {
             System.out.println("어떤 컬럼으로 입력하시겠습니까? (1.직원이름 2.입사년도 3.부서번호 4.직무 5.도시이름 6.부서장 성 7.나라이름 8.통계자료   0.종료)");
 
-            if (!scan.hasNextInt()) {
-                System.out.println("숫자를 입력해주세요!");
-                scan.nextLine();
-                continue;
-            }
+            try {
+            	String input = scan.nextLine();
+            	int num = Integer.parseInt(input);
 
-            int num = scan.nextInt();
-            scan.nextLine();
-
-            if (num == 0) {
-                run = false;
-            } else {
-                EmpDAO.runOption(num, scan);
+            	if (num == 0) {
+            		run = false;
+            	} else if (num >0  && num <= 8){
+            		EmpDAO.runChoose(num);
+            	} else {
+            		System.out.println("0~8사이의 숫자를 입력하세요!");
+            	}
+            } catch(Exception e) {
+            	System.out.println("숫자 입력하세요!");
             }
         }
-
         scan.close();
     }
 }
