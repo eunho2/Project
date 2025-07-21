@@ -73,7 +73,7 @@ public class EmpDAO {
 	                System.out.println("해당 데이터가 없습니다!");
 	            } else {
 	                for (int i = 0 ;i<empList.size();i++) {
-	                    System.out.println(empList.get(num).toString());
+	                    System.out.println(empList.get(i).toString());
 	                }
 	            }
 
