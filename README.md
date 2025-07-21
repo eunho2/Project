@@ -24,3 +24,13 @@
 
 ### ppt
 https://www.miricanvas.com/v/14we2o4
+
+
+select *
+from employees
+where (department_id in (select department_id
+							from departments
+							where location_id in (select location_id
+												from locations
+												where city = 'Roma')))
+;
